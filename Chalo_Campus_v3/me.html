@@ -1,0 +1,777 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>My Chalo · Chalo Campus</title>
+<meta name="description" content="Your profile, interests, trusted contact, plans and the people you've met.">
+<meta name="theme-color" content="#F5F3EC">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 200 200%22 width=%22200%22 height=%22200%22 style=%22flex-shrink:0%22%3E%3Crect width=%22200%22 height=%22200%22 rx=%2246%22 fill=%22%231D2230%22/%3E%3Cg transform=%22translate%2831.8 45%29 scale%281.1%29%22%3E%0A%3Ccircle cx=%2240%22 cy=%2250%22 r=%2240%22 fill=%22%23D2452B%22/%3E%3Ccircle cx=%2284%22 cy=%2250%22 r=%2240%22 fill=%22%230E7561%22/%3E%0A%3Cpath d=%22M62 16.6 A40 40 0 0 1 62 83.4 A40 40 0 0 1 62 16.6 Z%22 fill=%22%23FFE08A%22/%3E%0A%3Cpath d=%22M56 38 L69 50 L56 62%22 fill=%22none%22 stroke=%22%231D2230%22 stroke-width=%227.5%22 stroke-linecap=%22round%22 stroke-linejoin=%22round%22/%3E%3C/g%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@600;800&amp;family=Caveat:wght@600&amp;family=DM+Sans:wght@400;500;700&amp;display=swap">
+<style>
+/* Chalo Campus: shared styles. Off-white paper, grain, dot grid, halftone, washi tape. */
+:root{
+  --bg:#F5F3EC;--ink:#1D2230;--ink2:#4A4F5E;--line:#E3E0D6;--line2:#CFCBC0;
+  --accent:#D2452B;--accent-d:#B63A22;--green:#0E7561;--green-d:#0A5A4A;--mint:#E4F0EB;
+  --butter:#FFE08A;--amber:#FFF3D1;--amber-ink:#6B4A00;--danger:#B3261E;
+  --display:'Bricolage Grotesque','DM Sans',system-ui,sans-serif;
+  --body:'DM Sans',system-ui,-apple-system,'Segoe UI',sans-serif;
+  --hand:'Caveat','Segoe Script','Bradley Hand',cursive;
+  --shadow:0 12px 32px rgba(29,34,48,.08);
+  --grain:url("texture.webp");--grain-soft:url("texture-soft.webp");
+  --squig:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='8' viewBox='0 0 24 8'%3E%3Cpath d='M0 4 Q6 0 12 4 T24 4' fill='none' stroke='%23D2452B' stroke-width='2' stroke-linecap='round'/%3E%3C/svg%3E");
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background-color:var(--bg);background-image:var(--grain);color:var(--ink);font-family:var(--body);font-size:16px;line-height:1.5;-webkit-font-smoothing:antialiased}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:60;background:var(--bg)}
+img,svg{max-width:100%}
+h1,h2,h3,h4{font-family:var(--display);font-weight:800;letter-spacing:-.02em;line-height:1.1;margin:0;text-wrap:balance}
+h1{font-size:clamp(38px,6vw,62px);letter-spacing:-.03em}
+.h2{font-size:clamp(28px,4vw,40px)}
+.h3{font-size:24px}
+p{margin:0}
+a{color:var(--green-d)}
+.lead{font-size:19px;line-height:1.55;color:var(--ink2);max-width:60ch}
+.hint{font-size:14px;color:var(--ink2);line-height:1.5}
+.eyebrow{font-size:13px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--ink2)}
+:focus-visible{outline:3px solid var(--ink);outline-offset:2px}
+.visually-hidden{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+[hidden]{display:none!important}
+
+/* layout */
+.wrap{max-width:1120px;margin:0 auto;padding-left:max(20px,env(safe-area-inset-left,0px));padding-right:max(20px,env(safe-area-inset-right,0px))}
+.section{padding-top:72px;padding-bottom:72px}
+.section-tight{padding-top:24px;padding-bottom:64px}
+.stack{display:flex;flex-direction:column;gap:16px}
+.stack-lg{display:flex;flex-direction:column;gap:28px}
+.row{display:flex;flex-wrap:wrap;gap:12px;align-items:center}
+.between{display:flex;flex-wrap:wrap;gap:8px 16px;align-items:center;justify-content:space-between}
+.grid{display:grid;gap:20px;align-items:start}
+.cols-3{grid-template-columns:repeat(auto-fit,minmax(280px,1fr))}
+.cols-4{grid-template-columns:repeat(auto-fit,minmax(220px,1fr))}
+.cols-2{grid-template-columns:repeat(auto-fit,minmax(320px,1fr))}
+.cards{grid-template-columns:repeat(auto-fill,minmax(320px,1fr))}
+.split{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:48px;align-items:center}
+.minw{min-width:0}
+@media (max-width:860px){.split{grid-template-columns:minmax(0,1fr);gap:32px}}
+
+/* textures */
+.dots,.halftone,.navy{position:relative;isolation:isolate}
+.dots::before{content:"";position:absolute;inset:0;z-index:-1;background-image:radial-gradient(rgba(29,34,48,.16) 1.2px,transparent 1.7px);background-size:24px 24px;-webkit-mask-image:linear-gradient(#000 35%,transparent);mask-image:linear-gradient(#000 35%,transparent)}
+.halftone{background-color:var(--mint)}
+.halftone::before{content:"";position:absolute;inset:0;z-index:-1;background-image:radial-gradient(circle,rgba(14,117,97,.22) 2.2px,transparent 2.7px),radial-gradient(circle,rgba(14,117,97,.22) 2.2px,transparent 2.7px);background-size:18px 18px;background-position:0 0,9px 9px;-webkit-mask-image:linear-gradient(120deg,#000,transparent 65%);mask-image:linear-gradient(120deg,#000,transparent 65%)}
+.navy{background-color:var(--ink);color:#fff}
+.navy::before{content:"";position:absolute;inset:0;z-index:-1;background-image:radial-gradient(rgba(255,255,255,.13) 1.2px,transparent 1.7px);background-size:22px 22px;-webkit-mask-image:linear-gradient(200deg,#000,transparent 70%);mask-image:linear-gradient(200deg,#000,transparent 70%)}
+.navy .hint,.navy .lead{color:#D5D8E0}
+.paper{background-color:#fff;background-image:var(--grain-soft)}
+.tape{position:relative}
+.tape::before{content:"";position:absolute;top:-12px;left:50%;width:88px;height:26px;transform:translateX(-50%) rotate(-3deg);background-color:rgba(255,224,138,.85);background-image:repeating-linear-gradient(90deg,rgba(255,255,255,.4) 0 6px,transparent 6px 12px);box-shadow:0 1px 2px rgba(0,0,0,.1);z-index:2}
+.squiggle{background:var(--squig) repeat-x 0 100%;background-size:24px 8px;padding-bottom:8px}
+.hl{background:var(--butter);padding:0 10px;border-radius:10px;box-decoration-break:clone;-webkit-box-decoration-break:clone}
+
+/* buttons, chips, pills */
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;min-height:48px;padding:0 22px;border-radius:14px;border:1.5px solid transparent;font:700 16px var(--body);cursor:pointer;text-decoration:none;text-align:center;transition:transform .12s ease,box-shadow .12s ease,background-color .12s ease}
+.btn:hover{transform:translateY(-1px);box-shadow:0 6px 14px rgba(29,34,48,.14)}
+.btn:disabled,.btn[disabled]{opacity:.55;cursor:not-allowed;transform:none;box-shadow:none}
+.btn-primary{background:var(--accent);color:#fff}.btn-primary:hover{background:var(--accent-d)}
+.btn-dark{background:var(--ink);color:#fff}
+.btn-ghost{background:transparent;border-color:var(--ink);color:var(--ink)}
+.btn-soft{background:#fff;border-color:var(--line2);color:var(--ink)}
+.btn-light{background:#fff;color:var(--ink)}
+.btn-sm{min-height:44px;padding:0 16px;font-size:15px}
+.btn-block{width:100%}
+.link-btn{min-height:44px;padding:0;border:0;background:transparent;color:var(--green-d);font:700 15px var(--body);text-decoration:underline;cursor:pointer}
+.chips{display:flex;flex-wrap:wrap;gap:8px}
+.chip{min-height:44px;padding:0 16px;border-radius:999px;border:1px solid var(--line2);background:#fff;color:var(--ink);font:500 15px var(--body);cursor:pointer}
+.chip[aria-pressed="true"]{background:var(--ink);border-color:var(--ink);color:#fff}
+.chip[disabled]{opacity:.5;cursor:not-allowed}
+.pill{display:inline-flex;align-items:center;padding:4px 12px;border-radius:999px;background:#EEF0F4;font-size:13px;font-weight:700;color:var(--ink)}
+.pill-green{background:var(--mint);color:var(--green-d)}
+.pill-amber{background:var(--amber);color:var(--amber-ink)}
+.ok{color:var(--green-d);font-weight:700}
+.note{padding:10px 14px;border-radius:12px;background:var(--amber);color:var(--amber-ink);font-size:14px;line-height:1.5}
+.note-green{background:var(--mint);color:var(--green-d)}
+
+/* forms */
+.field{display:flex;flex-direction:column;gap:8px;min-width:0}
+.label{font-size:13px;font-weight:700;letter-spacing:.05em;text-transform:uppercase;color:var(--ink2)}
+.input,.select,.textarea{width:100%;min-height:48px;padding:0 14px;border-radius:12px;border:1px solid var(--line2);background:#fff;color:var(--ink);font:400 16px var(--body)}
+.textarea{padding:12px 14px;min-height:96px;resize:vertical}
+.err{margin:0;color:var(--danger);font-size:14px;font-weight:500}
+.check{display:flex;gap:10px;align-items:flex-start;font-size:15px;line-height:1.45}
+.check input{width:22px;height:22px;margin-top:1px;flex:none;accent-color:var(--green)}
+.switch{display:flex;align-items:center;justify-content:space-between;gap:16px;width:100%;min-height:56px;padding:8px 14px;border-radius:12px;border:1px solid var(--line);background:#FBFAF7;text-align:left;color:var(--ink);cursor:pointer;font-family:var(--body)}
+.switch .t{display:flex;flex-direction:column;gap:2px;min-width:0}
+.switch .t b{font-size:15px}.switch .t span{font-size:13px;color:var(--ink2)}
+.switch .tr{position:relative;flex:none;width:44px;height:26px;border-radius:999px;background:#B9B5A8}
+.switch .tr::after{content:"";position:absolute;top:3px;left:3px;width:20px;height:20px;border-radius:50%;background:#fff;transition:left .15s}
+.switch[aria-checked="true"] .tr{background:var(--green)}
+.switch[aria-checked="true"] .tr::after{left:21px}
+.stepper{display:flex;align-items:center;gap:12px}
+.stepper button{width:44px;height:44px;border-radius:50%;border:1px solid var(--line2);background:#fff;font-size:22px;color:var(--ink);cursor:pointer}
+.stepper output{min-width:30px;text-align:center;font-size:20px;font-weight:800;font-variant-numeric:tabular-nums}
+
+/* cards */
+.card{background-color:#fff;background-image:var(--grain-soft);border:1px solid var(--line);border-radius:18px;padding:22px;min-width:0}
+.card-lg{border-radius:22px;padding:28px;box-shadow:var(--shadow)}
+.box{border:1px solid var(--line);border-radius:14px;padding:16px;background:#FBFAF7;display:flex;flex-direction:column;gap:12px}
+
+/* header */
+.site-header{position:sticky;top:env(safe-area-inset-top,0px);z-index:50;background:rgba(245,243,236,.94);-webkit-backdrop-filter:blur(8px);backdrop-filter:blur(8px);border-bottom:1px solid var(--line)}
+.site-header .wrap{display:flex;align-items:center;justify-content:space-between;gap:16px;min-height:68px}
+.logo{display:flex;align-items:center;gap:10px;color:var(--ink);text-decoration:none;font-family:var(--display);font-weight:800;font-size:26px;letter-spacing:-.02em}
+.nav{display:flex;align-items:center;gap:4px;flex:1;justify-content:center}
+.nav a{display:inline-flex;align-items:center;min-height:44px;padding:0 14px;border-radius:10px;color:var(--ink);text-decoration:none;font-weight:500}
+.nav a:hover{background:rgba(29,34,48,.06)}
+.nav a[aria-current="page"]{background:#fff;box-shadow:inset 0 0 0 1px var(--line2);font-weight:700}
+.head-actions{display:flex;align-items:center;gap:8px}
+.menu-btn{display:none}
+.av{width:32px;height:32px;border-radius:50%;display:inline-flex;align-items:center;justify-content:center;font-weight:700;font-size:13px;border:2px solid #fff;box-sizing:border-box;flex:none;color:var(--ink)}
+.avs{display:flex;align-items:center;padding-right:8px}.avs .av{margin-right:-8px}
+@media (max-width:860px){
+  .menu-btn{display:inline-flex}
+  .nav{display:none;position:absolute;top:100%;left:0;right:0;flex-direction:column;align-items:stretch;gap:2px;padding:12px max(20px,env(safe-area-inset-right,0px)) 20px max(20px,env(safe-area-inset-left,0px));background:var(--bg);border-bottom:1px solid var(--line)}
+  .nav.open{display:flex}
+  .logo{font-size:24px}
+}
+
+/* footer */
+.site-footer{border-top:1px solid var(--line);margin-top:0;padding-top:48px;padding-bottom:40px}
+.foot-grid{display:grid;grid-template-columns:minmax(0,1.4fr) repeat(2,minmax(0,1fr));gap:32px}
+.foot-grid ul{list-style:none;margin:12px 0 0;padding:0;display:flex;flex-direction:column;gap:2px}
+.foot-grid a{display:inline-flex;align-items:center;min-height:36px;color:var(--ink2);text-decoration:none}
+.foot-grid a:hover{color:var(--ink);text-decoration:underline}
+.foot-base{margin-top:32px;padding-top:20px;border-top:1px solid var(--line);font-size:14px;color:var(--ink2)}
+@media (max-width:700px){.foot-grid{grid-template-columns:minmax(0,1fr) minmax(0,1fr)}.foot-grid>:first-child{grid-column:1/-1}}
+
+/* hero */
+.hero{padding-top:56px;padding-bottom:84px}
+.hero-grid{display:grid;grid-template-columns:minmax(0,1.1fr) minmax(0,.9fr);gap:48px;align-items:center}
+@media (max-width:900px){.hero-grid{grid-template-columns:minmax(0,1fr)}.hero{padding-top:32px}}
+.badge{display:inline-flex;align-items:center;gap:8px;padding:8px 14px;border-radius:999px;background:#fff;border:1px solid var(--line);font-size:14px;font-weight:500}
+.ticks{list-style:none;margin:0;padding:0;display:flex;flex-wrap:wrap;gap:10px 22px;font-size:15px;color:var(--ink2)}
+.ticks li{display:flex;align-items:center;gap:8px}
+.hero-art{position:relative;display:flex;flex-direction:column;gap:18px;padding:16px 0 8px}
+.postit{align-self:flex-start;width:min(300px,100%);padding:26px 24px 22px;background:#FFE98F;border-radius:4px;transform:rotate(-3deg);box-shadow:0 14px 26px rgba(29,34,48,.16);font-family:var(--hand);font-size:34px;line-height:1;font-weight:600}
+.postit small{display:block;margin-top:12px;font-size:22px;color:#5A4A12}
+.ticket{display:block;text-decoration:none;color:var(--ink);padding:16px 18px;border-radius:16px;background-color:#fff;background-image:var(--grain-soft);border:1px solid var(--line);box-shadow:var(--shadow)}
+.ticket:nth-of-type(1){transform:rotate(1.6deg);margin-left:12%}
+.ticket:nth-of-type(2){transform:rotate(-1.4deg);margin-left:2%}
+.ticket b{display:block;font-family:var(--display);font-size:19px;line-height:1.2;margin:4px 0 6px}
+.ticket .hint{display:flex;gap:10px;flex-wrap:wrap}
+.notes{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:26px}
+.sticky{position:relative;padding:26px 22px 22px;border-radius:4px;font-family:var(--hand);font-size:32px;line-height:1.05;font-weight:600;box-shadow:0 12px 22px rgba(29,34,48,.12)}
+.sticky:nth-child(1){background:#FFE98F;transform:rotate(-2deg)}
+.sticky:nth-child(2){background:#CFE5F5;transform:rotate(1.5deg)}
+.sticky:nth-child(3){background:#F8DCE2;transform:rotate(-1deg)}
+.tiles{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:14px}
+.tile{display:flex;flex-direction:column;gap:4px;min-height:96px;padding:16px 18px;border-radius:16px;text-decoration:none;color:var(--ink);border:1px solid rgba(29,34,48,.08);transition:transform .12s ease}
+.tile:hover{transform:translateY(-2px) rotate(-.6deg)}
+.tile b{font-family:var(--display);font-size:20px}
+.tile span{font-size:14px;color:rgba(29,34,48,.75)}
+.step{display:flex;gap:14px;align-items:flex-start}
+.num{flex:none;width:34px;height:34px;border-radius:50%;background:var(--ink);color:#fff;display:inline-flex;align-items:center;justify-content:center;font-weight:700}
+.ticks-list{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:12px}
+.ticks-list li{display:flex;gap:10px;align-items:flex-start;line-height:1.45}
+.ticks-list svg{flex:none;margin-top:3px}
+.page-head{padding-top:48px;padding-bottom:28px}
+
+/* plan card */
+.plan{display:flex;flex-direction:column;gap:14px;padding:20px 20px 18px}
+.plan-title{font-size:22px;line-height:1.2}
+.plan-title a{color:var(--ink);text-decoration:none}
+.plan-title a:hover{text-decoration:underline}
+.pills{display:flex;flex-wrap:wrap;gap:6px}
+.meta{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:6px;font-size:15px;color:#3B4050}
+.meta li{display:flex;gap:8px;align-items:center}
+.meta svg{flex:none}
+.plan-host{display:flex;gap:10px;align-items:center;font-size:14px;color:#3B4050}
+.perf{position:relative;border-top:2px dashed var(--line2);margin:2px -20px}
+.perf::before,.perf::after{content:"";position:absolute;top:-11px;width:20px;height:20px;border-radius:50%;background:var(--bg);border:1px solid var(--line)}
+.perf::before{left:-11px;clip-path:inset(0 0 0 50%)}
+.perf::after{right:-11px;clip-path:inset(0 50% 0 0)}
+.plan-foot{display:flex;flex-direction:column;gap:10px}
+.bar{height:6px;border-radius:999px;background:#ECEAE3;overflow:hidden}
+.bar i{display:block;height:100%;background:var(--green);border-radius:999px}
+.actions{display:flex;gap:8px;flex-wrap:wrap}
+.actions .btn{flex:1 1 120px}
+
+/* filters */
+.filters{display:flex;flex-direction:column;gap:16px}
+.filter-row{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:14px}
+.empty{padding:36px;border-radius:18px;border:2px dashed var(--line2);text-align:center;display:flex;flex-direction:column;gap:12px;align-items:center}
+
+/* plan detail */
+.detail{display:grid;grid-template-columns:minmax(0,1fr) 380px;gap:28px;align-items:start}
+.sticky-col{position:sticky;top:90px;display:flex;flex-direction:column;gap:20px}
+@media (max-width:940px){.detail{grid-template-columns:minmax(0,1fr)}.sticky-col{position:static}}
+.facts{display:grid;grid-template-columns:auto minmax(0,1fr);gap:10px 18px;margin:0}
+.facts dt{font-weight:700;color:var(--ink2);font-size:14px}.facts dd{margin:0}
+.people{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:6px}
+.people li{display:flex;align-items:center;gap:12px;flex-wrap:wrap;padding:8px 0;border-bottom:1px solid var(--line)}
+.people li:last-child{border-bottom:0}
+.people .who{flex:1 1 180px;min-width:0}
+.people .acts{display:flex;gap:4px}
+.chat{display:flex;flex-direction:column;gap:10px;max-height:340px;overflow:auto;padding:2px}
+.msg{max-width:88%;padding:10px 14px;border-radius:14px;background:#F0EEE6;align-self:flex-start;overflow-wrap:anywhere}
+.msg small{display:block;font-size:12px;opacity:.7;margin-bottom:2px}
+.msg.me{align-self:flex-end;background:var(--ink);color:#fff}
+.sum{margin:0;display:flex;flex-direction:column;gap:8px;font-variant-numeric:tabular-nums}
+.sum div{display:flex;justify-content:space-between;gap:12px}
+.sum dd{margin:0}
+.sum .tot{padding-top:10px;border-top:1px solid var(--line);font-size:20px;font-weight:800}
+.ok-msg{padding:10px 14px;border-radius:12px;background:var(--mint);color:var(--green-d);font-weight:700;font-size:15px}
+.rate{display:flex;flex-wrap:wrap;gap:8px;align-items:center;padding:10px 0;border-bottom:1px solid var(--line)}
+
+/* faq */
+details.faq{border-bottom:1px solid var(--line)}
+details.faq summary{cursor:pointer;list-style:none;display:flex;justify-content:space-between;gap:16px;align-items:center;min-height:56px;font-weight:700;font-size:17px}
+details.faq summary::-webkit-details-marker{display:none}
+details.faq summary::after{content:"+";font-size:24px;font-weight:400}
+details.faq[open] summary::after{content:"\2212"}
+details.faq p{padding:0 0 18px;color:var(--ink2);max-width:62ch}
+
+/* modal + toast */
+.modal-back{position:fixed;inset:0;z-index:100;background:rgba(29,34,48,.55);display:flex;align-items:center;justify-content:center;padding:16px}
+.modal{position:relative;width:100%;max-width:480px;max-height:100%;overflow:auto;background-color:#fff;background-image:var(--grain-soft);border-radius:22px;padding:28px;display:flex;flex-direction:column;gap:16px;box-shadow:0 24px 60px rgba(0,0,0,.3)}
+.modal-x{position:absolute;top:10px;right:10px;width:44px;height:44px;border:0;background:transparent;font-size:28px;line-height:1;cursor:pointer;color:var(--ink)}
+.toast{position:fixed;left:50%;bottom:calc(24px + env(safe-area-inset-bottom,0px));transform:translate(-50%,20px);opacity:0;pointer-events:none;background:var(--ink);color:#fff;padding:14px 20px;border-radius:14px;max-width:min(480px,calc(100% - 32px));z-index:200;transition:opacity .2s,transform .2s;font-size:15px;box-shadow:0 8px 24px rgba(29,34,48,.3)}
+.toast.on{opacity:1;transform:translate(-50%,0)}
+
+/* tables and calc */
+.tiers{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:20px;align-items:stretch}
+.tier{display:flex;flex-direction:column;gap:14px}
+.tier .price{font-family:var(--display);font-size:34px;font-weight:800}
+.prose{max-width:70ch;display:flex;flex-direction:column;gap:14px}
+.prose h2{font-size:28px;margin-top:20px}
+.prose ul{margin:0;padding-left:22px;display:flex;flex-direction:column;gap:6px}
+.prose mark{background:var(--butter);padding:0 6px;border-radius:6px}
+.toc{display:flex;flex-wrap:wrap;gap:8px}
+noscript .note{margin:16px}
+@media (prefers-reduced-motion:reduce){*,*::before,*::after{transition:none!important;animation:none!important;scroll-behavior:auto!important}}
+
+body,.paper,.card,.ticket,.modal{background-size:540px 540px}</style>
+<link rel="stylesheet" href="motion.css">
+<script src="motion.js"></script>
+</head>
+<body>
+<div id="site-header"></div>
+<noscript><p class="note">My Chalo needs JavaScript. Please turn it on.</p></noscript>
+<main id="main" data-page="me">
+<section class="page-head dots"><div class="wrap stack"><h1 style="font-size:clamp(34px,5vw,52px)">My Chalo</h1><p class="lead">Your profile, safety settings and plans. Everything here is saved only on this device.</p></div></section>
+<section class="section-tight"><div class="wrap" id="me"></div></section>
+</main>
+<div id="site-footer"></div>
+<script>
+/* Chalo Campus: shared script. Data lives in this browser only (localStorage). */
+(function () {
+  'use strict';
+
+  const KEY = 'chalo.v1';
+  const CAMPUS = 'MSRIT Bengaluru';
+  const FEE_RATE = 0.05;
+
+  const CATS = [
+    { k: 'Chai', s: 'chai', c: '#FFE3B8' },
+    { k: 'Food & cafés', s: 'food', c: '#F5DCCB' },
+    { k: 'Sports', s: 'sports', c: '#CDEBD8' },
+    { k: 'Gaming', s: 'gaming', c: '#DCD4F7' },
+    { k: 'Movies', s: 'movies', c: '#F7D3D9' },
+    { k: 'Explore', s: 'explore', c: '#CFE5F5' },
+    { k: 'Study', s: 'study', c: '#E6EAB8' },
+    { k: 'Creative', s: 'creative', c: '#F8DCE2' }
+  ];
+  const DEPT_GROUPS = [{ label: 'Engineering & Technology Departments', items: ['Aerospace Engineering', 'Artificial Intelligence & Data Science', 'Artificial Intelligence & Machine Learning', 'Biotechnology', 'Chemical Engineering', 'Civil Engineering', 'Computer Science & Engineering', 'Computer Science & Engineering (AI & ML)', 'Computer Science & Engineering (Cybersecurity)', 'Electrical & Electronics Engineering', 'Electronics & Communication Engineering', 'Electronics & Instrumentation Engineering', 'Electronics & Telecommunication Engineering', 'Industrial Engineering & Management', 'Information Science & Engineering', 'Medical Electronics Engineering', 'Mechanical Engineering'] }, { label: 'Architecture, Science, Management & Applications', items: ['Architecture', 'Chemistry', 'Humanities', 'Mathematics', 'Physics (Basic Sciences)', 'Master of Computer Applications (MCA)', 'Department of Management Studies (MBA)'] }];
+  const DEPTS = DEPT_GROUPS.reduce(function (a, g) { return a.concat(g.items); }, []);
+  const VENUES = [
+    { g: 'On campus', items: ['Campus canteen', 'Campus library', 'Sports ground'] },
+    { g: 'Cafés and food', items: ['Tea stall by the main gate', 'Café near campus', 'Restaurant near campus'] },
+    { g: 'Sports and games', items: ['Turf near campus', 'Gaming lounge near campus', 'Bowling alley'] },
+    { g: 'Outdoors', items: ['Cubbon Park', 'Lalbagh Botanical Garden'] },
+    { g: 'Malls and cinemas', items: ['Mall food court', 'Multiplex'] }
+  ];
+  const AV = ['#FFD9C9', '#D6ECE4', '#E3DCFA', '#FFF0B8', '#D4E6F7', '#F8DCE2'];
+  const DAYS = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
+  const MONTHS = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+
+  const ICON = {
+    tick: '<svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><circle cx="8" cy="8" r="8" fill="#0E7561"/><path d="M4.5 8.3l2.2 2.2 4.8-4.8" stroke="#fff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>',
+    clock: '<svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><circle cx="8" cy="8" r="6.2" stroke="#5B6070" stroke-width="1.5"/><path d="M8 4.7V8l2.2 1.4" stroke="#5B6070" stroke-width="1.5" stroke-linecap="round"/></svg>',
+    pin: '<svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M8 14.2s4.6-3.9 4.6-7.4A4.6 4.6 0 003.4 6.8C3.4 10.3 8 14.2 8 14.2z" stroke="#5B6070" stroke-width="1.5" stroke-linejoin="round"/><circle cx="8" cy="6.8" r="1.6" fill="#5B6070"/></svg>',
+    logo: '<svg class="logo-svg" viewBox="0 6 414.6 94" width="150" height="34" role="img" aria-label="Chalo"><g class="lg-a"><circle cx="40" cy="50" r="40" fill="#D2452B"/></g><g class="lg-b"><circle cx="84" cy="50" r="40" fill="#0E7561"/></g><g class="lg-l"><path d="M62 16.6A40 40 0 0 1 62 83.4A40 40 0 0 1 62 16.6Z" fill="#FFE08A"/></g><g class="lg-c"><path d="M56 38L69 50L56 62" fill="none" stroke="#1D2230" stroke-width="7.5" stroke-linecap="round" stroke-linejoin="round"/></g><path d="M172.1953125 96.06640625C186.8203125 96.06640625 196.62109375 88.1953125 198.3984375 75.5L182.046875 72.859375C180.98046875 79.00390625 177.62890625 82.5078125 172.3984375 82.5078125C165.59375 82.5078125 161.734375 76.46484375 161.734375 66.71484375C161.734375 56.9140625 165.59375 51.07421875 172.3984375 51.07421875C177.62890625 51.07421875 180.87890625 54.4765625 181.99609375 60.41796875L198.34765625 57.67578125C196.5703125 45.3359375 186.66796875 37.515625 172.1953125 37.515625C154.421875 37.515625 143.65625 49.296875 143.65625 66.81640625C143.65625 84.28515625 154.421875 96.06640625 172.1953125 96.06640625Z M223.38484375000002 62.6015625C223.38484375000002 56.0 227.29500000000002 52.08984375 233.08406250000002 52.08984375C238.87312500000002 52.08984375 242.32625000000002 55.8984375 242.32625000000002 62.296875V95.0H260.04890625V58.84375C260.04890625 45.99609375 252.27937500000002 37.515625 240.39656250000002 37.515625C231.56062500000002 37.515625 226.07625000000002 42.1875 223.02937500000002 49.5V19.3359375H205.66218750000002V95.0H223.38484375000002Z M285.54312500000003 96.015625C293.41421875000003 96.015625 298.89859375000003 92.8671875 301.99625000000003 87.02734375H302.45328125000003V95.0H319.10953125000003V56.45703125C319.10953125000003 44.26953125 307.98843750000003 37.515625 293.87125000000003 37.515625C279.65250000000003 37.515625 270.71500000000003 44.16796875 268.48062500000003 53.8671875L284.52750000000003 55.94921875C285.49234375000003 52.39453125 288.79312500000003 50.109375 293.71890625000003 50.109375C298.54312500000003 50.109375 301.43765625000003 52.34375 301.43765625000003 56.25390625V56.45703125C301.43765625000003 59.9609375 297.57828125000003 60.671875 287.98062500000003 61.484375C276.50406250000003 62.44921875 266.85562500000003 66.6640625 266.85562500000003 79.2578125C266.85562500000003 90.48046875 274.62515625000003 96.015625 285.54312500000003 96.015625ZM290.92593750000003 84.28515625C286.66031250000003 84.28515625 283.61343750000003 82.25390625 283.61343750000003 78.4453125C283.61343750000003 74.6875 286.55875000000003 72.453125 291.78921875000003 71.69140625C295.09000000000003 71.18359375 299.55875000000003 70.421875 301.59000000000003 69.35546875V74.7890625C301.59000000000003 80.375 296.86734375000003 84.28515625 290.92593750000003 84.28515625Z M346.48265625000005 19.3359375H328.76000000000005V95.0H346.48265625000005Z M382.48859375000006 96.06640625C400.21125000000006 96.06640625 410.97687500000006 84.28515625 410.97687500000006 66.81640625C410.97687500000006 49.296875 400.21125000000006 37.515625 382.48859375000006 37.515625C364.71515625000006 37.515625 353.94953125000006 49.296875 353.94953125000006 66.81640625C353.94953125000006 84.28515625 364.71515625000006 96.06640625 382.48859375000006 96.06640625ZM382.48859375000006 82.5078125C375.68390625000006 82.5078125 372.02765625000006 76.16015625 372.02765625000006 66.71484375C372.02765625000006 57.21875 375.68390625000006 51.07421875 382.48859375000006 51.07421875C389.29328125000006 51.07421875 392.94953125000006 57.21875 392.94953125000006 66.71484375C392.94953125000006 76.16015625 389.29328125000006 82.5078125 382.48859375000006 82.5078125Z" fill="currentColor"/></svg>'
+  };
+
+  /* ---------- helpers ---------- */
+  function esc(s) {
+    return String(s == null ? '' : s).replace(/[&<>"']/g, function (c) {
+      return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c];
+    });
+  }
+  function rupee(n) { return '₹' + Number(n).toLocaleString('en-IN'); }
+  function fee(cost) { return Math.ceil(cost * FEE_RATE); }
+  function avColor(name) {
+    let h = 0;
+    for (let i = 0; i < name.length; i++) h = (h * 31 + name.charCodeAt(i)) >>> 0;
+    return AV[h % AV.length];
+  }
+  function fmtTime(d) {
+    let h = d.getHours();
+    const m = d.getMinutes();
+    const ap = h >= 12 ? 'PM' : 'AM';
+    h = h % 12 || 12;
+    return h + ':' + (m < 10 ? '0' : '') + m + ' ' + ap;
+  }
+  function dayStart(d) { return new Date(d.getFullYear(), d.getMonth(), d.getDate()); }
+  function dayDiff(ts) { return Math.round((dayStart(new Date(ts)) - dayStart(new Date())) / 864e5); }
+  function fmtDay(ts) {
+    const d = new Date(ts), diff = dayDiff(ts);
+    if (diff === 0) return 'Today';
+    if (diff === 1) return 'Tomorrow';
+    return DAYS[d.getDay()] + ' ' + d.getDate() + ' ' + MONTHS[d.getMonth()];
+  }
+  function fmtWhen(ts) { return fmtDay(ts) + ' · ' + fmtTime(new Date(ts)); }
+  function at(offset, h, m) {
+    const n = new Date();
+    return new Date(n.getFullYear(), n.getMonth(), n.getDate() + offset, h, m || 0, 0, 0).getTime();
+  }
+  function soon(h, m) { const t = at(0, h, m); return t > Date.now() + 30 * 60000 ? t : at(1, h, m); }
+  function nextDow(dow) { const diff = (dow - new Date().getDay() + 7) % 7; return diff === 0 ? 7 : diff; }
+  function catOf(k) { return CATS.find(function (c) { return c.k === k; }) || { k: k, s: '', c: '#EEF0F4' }; }
+  function isLate(ts) { return new Date(ts).getHours() >= 20; }
+
+  /* ---------- state ---------- */
+  function blank() {
+    return { user: null, plans: [], joins: {}, paid: {}, chats: {}, reports: [], blocked: {}, met: [], rated: {}, waitlist: [], enquiries: [], interests: [] };
+  }
+  function load() {
+    try {
+      const raw = localStorage.getItem(KEY);
+      if (raw) return Object.assign(blank(), JSON.parse(raw));
+    } catch (e) { /* storage unavailable */ }
+    return blank();
+  }
+  const state = load();
+  function save() { try { localStorage.setItem(KEY, JSON.stringify(state)); } catch (e) { /* ignore */ } }
+  function resetAll() {
+    const b = blank();
+    Object.keys(state).forEach(function (k) { delete state[k]; });
+    Object.assign(state, b);
+    save();
+  }
+
+  /* ---------- sample plans (made up for this preview) ---------- */
+  const HOSTS = {
+    rohan: { n: 'Rohan', d: 'Mechanical Engineering', r: 4.8, h: 14 },
+    imran: { n: 'Imran', d: 'Computer Science & Engineering', r: 4.9, h: 22 },
+    meera: { n: 'Meera', d: 'Architecture', r: 4.9, h: 9 },
+    dev: { n: 'Dev', d: 'Computer Science & Engineering', r: 4.7, h: 6 },
+    kavya: { n: 'Kavya', d: 'Biotechnology', r: 4.8, h: 11 },
+    arjun: { n: 'Arjun', d: 'Civil Engineering', r: 4.6, h: 5 },
+    nisha: { n: 'Nisha', d: 'Humanities', r: 4.9, h: 8 },
+    farah: { n: 'Farah', d: 'Architecture', r: 4.8, h: 12 },
+    tanvi: { n: 'Tanvi', d: 'Humanities', r: 4.7, h: 4 }
+  };
+  function P(n, d) { return { n: n, d: d }; }
+  function seedPlans() {
+    const sat = nextDow(6), sun = nextDow(0), fri = nextDow(5);
+    return [
+      { id: 'p1', title: 'Chai after the last lecture', cat: 'Chai', ts: soon(17, 0), venue: 'Tea stall by the main gate', cap: 6, cost: 0, approve: false, women: false, weekly: false, host: HOSTS.rohan,
+        going: [P('Ananya', 'Architecture'), P('Vikram', 'Humanities'), P('Sana', 'Physics (Basic Sciences)')],
+        desc: 'Short and easy. Tea, samosas and no agenda. Come straight from your last class, even if you only know one person here.',
+        chat: [{ w: 'Rohan', t: 'I will grab the corner bench. Look for the blue backpack.' }] },
+      { id: 'p2', title: 'Five-a-side football, all levels welcome', cat: 'Sports', ts: at(sat, 6, 0), venue: 'Turf near campus', cap: 9, cost: 120, minPay: 8, paid0: 5, approve: false, women: false, weekly: true, host: HOSTS.imran,
+        going: [P('Karthik', 'Civil Engineering'), P('Priya', 'Humanities'), P('Neil', 'Mechanical Engineering'), P('Tarun', 'Chemistry'), P('Rahul', 'Department of Management Studies (MBA)'), P('Manav', 'Electronics & Communication Engineering')],
+        desc: 'We play every Saturday morning. Teams are shuffled each game so nobody is stuck with the same people. Bring water and shoes with grip.',
+        chat: [{ w: 'Imran', t: 'Turf is booked once 8 of us have paid. Pay your share in the plan page.' }, { w: 'Karthik', t: 'I will bring the ball.' }] },
+      { id: 'p3', title: 'Board games at a quiet café', cat: 'Food & cafés', ts: at(sat, 16, 0), venue: 'Café near campus', cap: 5, cost: 150, minPay: 4, paid0: 2, approve: true, women: true, weekly: false, host: HOSTS.meera,
+        going: [P('Zoya', 'Architecture'), P('Isha', 'Humanities')],
+        desc: 'A relaxed afternoon of Catan, Codenames and whatever else is on the shelf. Women only, and the host approves each request. The fee covers the table and one drink.',
+        chat: [{ w: 'Meera', t: 'Happy to teach any game. No experience needed.' }] },
+      { id: 'p4', title: 'Valorant 5-stack, beginners welcome', cat: 'Gaming', ts: at(sun, 15, 0), venue: 'Gaming lounge near campus', cap: 4, cost: 100, minPay: 4, paid0: 2, approve: false, women: false, weekly: false, host: HOSTS.dev,
+        going: [P('Manav', 'Electronics & Communication Engineering'), P('Lakshmi', 'Biotechnology')],
+        desc: 'Three hours at the lounge. We will mix ranks and keep it friendly. If you have never played, say so and we will pair you up.',
+        chat: [] },
+      { id: 'p5', title: 'Cubbon Park morning walk', cat: 'Explore', ts: at(sun, 7, 0), venue: 'Cubbon Park', cap: 7, cost: 0, approve: false, women: false, weekly: false, host: HOSTS.kavya,
+        going: [P('Lakshmi', 'Biotechnology')],
+        desc: 'An easy 4 km loop, then filter coffee. We meet at the main gate and stay together.',
+        chat: [] },
+      { id: 'p6', title: 'Friday night movie, group booking', cat: 'Movies', ts: at(fri, 19, 15), venue: 'Multiplex', cap: 5, cost: 250, minPay: 5, paid0: 3, approve: false, women: false, weekly: false, host: HOSTS.arjun,
+        going: [P('Vikram', 'Humanities'), P('Priya', 'Humanities'), P('Rahul', 'Department of Management Studies (MBA)')],
+        desc: 'We will pick the film together in the chat. Tickets are booked once 5 people have paid, and seats are together.',
+        chat: [{ w: 'Arjun', t: 'Vote in here for the film. I will book the best-voted one.' }] },
+      { id: 'p7', title: 'Library study sprint', cat: 'Study', ts: at(1, 18, 0), venue: 'Campus library', cap: 5, cost: 0, approve: false, women: false, weekly: true, host: HOSTS.tanvi,
+        going: [P('Isha', 'Humanities')],
+        desc: 'Two 50-minute focus blocks with a tea break in between. Bring whatever you are stuck on.',
+        chat: [] },
+      { id: 'p8', title: 'Sketch and chai evening', cat: 'Creative', ts: at(1, 17, 30), venue: 'Café near campus', cap: 6, cost: 0, approve: false, women: false, weekly: false, host: HOSTS.farah,
+        going: [P('Zoya', 'Architecture'), P('Neil', 'Mechanical Engineering')],
+        desc: 'Bring a sketchbook or borrow a pencil. We draw whatever is in front of us and share chai. Beginners are the point.',
+        chat: [] },
+      { id: 'p9', title: 'Biryani after the practice match', cat: 'Food & cafés', ts: at(sun, 20, 30), venue: 'Restaurant near campus', cap: 6, cost: 200, minPay: 5, paid0: 2, approve: false, women: false, weekly: false, host: HOSTS.nisha,
+        going: [P('Tarun', 'Chemistry')],
+        desc: 'A group table, so we all eat together. Evening plan, so the host is phone-verified. We leave together at 10 PM.',
+        chat: [] },
+      { id: 'p10', title: 'Lalbagh sunrise photo walk', cat: 'Explore', ts: at(sun, 6, 30), venue: 'Lalbagh Botanical Garden', cap: 8, cost: 0, approve: false, women: false, weekly: false, host: HOSTS.farah,
+        going: [P('Ananya', 'Architecture'), P('Karthik', 'Civil Engineering')],
+        desc: 'Phones are fine. We walk slowly, stop often and compare shots over breakfast.',
+        chat: [] }
+    ];
+  }
+  const SEEDS = seedPlans();
+
+  function all() {
+    return SEEDS.concat(state.plans).sort(function (a, b) { return a.ts - b.ts; });
+  }
+  function get(id) { return all().find(function (p) { return p.id === id; }); }
+
+  function view(p) {
+    const j = state.joins[p.id];
+    const going = p.going.slice();
+    if (j === 'in') going.push({ n: 'You', d: state.user ? state.user.dept : '', me: true });
+    const left = Math.max(0, p.cap - going.length);
+    const paidCount = (p.paid0 || 0) + (state.paid[p.id] ? 1 : 0);
+    const minPay = p.minPay || 0;
+    return { p: p, j: j, going: going, left: left, full: left <= 0, paidCount: paidCount, minPay: minPay,
+      confirmed: p.cost > 0 && paidCount >= minPay, late: isLate(p.ts), fee: fee(p.cost) };
+  }
+  function joinState(v) {
+    const p = v.p, me = state.user;
+    if (p.mine) return { label: 'Your plan', cls: 'btn-soft', off: true };
+    if (v.j === 'in') return { label: "You're in. Tap to leave", cls: 'btn-soft' };
+    if (v.j === 'req') return { label: 'Requested. Tap to cancel', cls: 'btn-soft' };
+    if (p.women && me && me.gender !== 'woman') return { label: 'Women only', cls: 'btn-soft', off: true };
+    if (v.full) return { label: 'Plan is full', cls: 'btn-soft', off: true };
+    if (p.approve) return { label: 'Ask to join', cls: 'btn-dark' };
+    return { label: p.cost > 0 ? 'Join · ' + rupee(p.cost) : 'Join', cls: 'btn-primary' };
+  }
+
+  function planCard(p, opts) {
+    opts = opts || {};
+    const v = view(p), cat = catOf(p.cat), js = joinState(v);
+    const href = 'plan.html#' + p.id;
+    const avs = v.going.slice(0, 4).map(function (g) {
+      return '<span class="av" style="background:' + avColor(g.n) + '">' + esc(g.n.charAt(0).toUpperCase()) + '</span>';
+    }).join('');
+    const pills = '<span class="pill" style="background:' + cat.c + '">' + esc(p.cat) + '</span>' +
+      (p.weekly ? '<span class="pill">Repeats weekly</span>' : '') +
+      (p.women ? '<span class="pill pill-green">Women-only</span>' : '') +
+      (p.approve ? '<span class="pill">Host approves</span>' : '');
+    const price = p.cost > 0 ? '<strong>' + rupee(p.cost) + '</strong> each' : '<strong>Free</strong> to join';
+    const spots = v.full ? 'Full' : v.left + (v.left === 1 ? ' spot left' : ' spots left');
+    const pct = Math.min(100, Math.round(v.going.length / p.cap * 100));
+    const actions = opts.preview
+      ? '<span class="btn ' + js.cls + ' btn-block" aria-hidden="true">' + esc(js.label) + '</span>'
+      : '<a class="btn btn-soft btn-sm" href="' + href + '">Details</a><button type="button" class="btn ' + js.cls + ' btn-sm" data-act="join" data-id="' + esc(p.id) + '"' + (js.off ? ' disabled' : '') + '>' + esc(js.label) + '</button>';
+    const hostLine = p.host.r ? '★ ' + p.host.r : 'New host';
+    return '<article class="plan card">' +
+      '<div class="pills">' + pills + '</div>' +
+      '<h3 class="plan-title">' + (opts.preview ? esc(p.title || 'Your plan title') : '<a href="' + href + '">' + esc(p.title) + '</a>') + '</h3>' +
+      '<ul class="meta"><li>' + ICON.clock + esc(fmtWhen(p.ts)) + '</li><li>' + ICON.pin + '<span>' + esc(p.venue) + ' <span class="ok">· public place</span></span></li></ul>' +
+      '<div class="plan-host"><span class="av" style="background:' + avColor(p.host.n) + '">' + esc(p.host.n.charAt(0).toUpperCase()) + '</span>' +
+      '<span>Hosted by <strong>' + esc(p.host.n) + '</strong>, ' + esc(p.host.d) + '<br><span class="ok">Verified student</span> · ' + hostLine + '</span></div>' +
+      '<div class="perf" aria-hidden="true"></div>' +
+      '<div class="plan-foot"><div class="between"><div class="avs">' + avs + '</div><strong>' + spots + '</strong></div>' +
+      '<div class="bar"><i style="width:' + pct + '%"></i></div>' +
+      '<div class="between hint"><span>' + price + '</span>' + (p.cost > 0 ? '<span>Held until confirmed</span>' : '') + '</div>' +
+      (isLate(p.ts) ? '<p class="note">Evening plan. The host is phone-verified.</p>' : '') +
+      '<div class="actions">' + actions + '</div></div></article>';
+  }
+
+  /* ---------- toast + modal ---------- */
+  let toastTimer;
+  function toast(msg) {
+    let t = document.getElementById('toast');
+    if (!t) {
+      t = document.createElement('div');
+      t.id = 'toast'; t.className = 'toast'; t.setAttribute('role', 'status');
+      document.body.appendChild(t);
+    }
+    t.textContent = msg;
+    t.classList.add('on');
+    clearTimeout(toastTimer);
+    toastTimer = setTimeout(function () { t.classList.remove('on'); }, 3600);
+  }
+  let lastFocus = null;
+  function modal(html) {
+    if (!document.getElementById('modal')) lastFocus = document.activeElement;
+    closeModal(true);
+    const back = document.createElement('div');
+    back.className = 'modal-back'; back.id = 'modal';
+    back.innerHTML = '<div class="modal" role="dialog" aria-modal="true" aria-labelledby="mt"><button type="button" class="modal-x" data-act="close" aria-label="Close">×</button>' + html + '</div>';
+    document.body.appendChild(back);
+    back.addEventListener('mousedown', function (e) { if (e.target === back) closeModal(); });
+    const first = back.querySelector('input:not([type=checkbox]),select,textarea');
+    if (first) first.focus();
+    return back.firstChild;
+  }
+  function closeModal(silent) {
+    const m = document.getElementById('modal');
+    if (m) m.parentNode.removeChild(m);
+    if (!silent && lastFocus && lastFocus.focus) { try { lastFocus.focus(); } catch (e) { /* ignore */ } }
+  }
+  document.addEventListener('keydown', function (e) { if (e.key === 'Escape') closeModal(); });
+
+  const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
+
+  /* ---------- sign in ---------- */
+  function openAuth(done) {
+    const dopts = '<option value="">Choose your department</option>' + DEPT_GROUPS.map(function (g) { return '<optgroup label="' + esc(g.label) + '">' + g.items.map(function (d) { return '<option>' + esc(d) + '</option>'; }).join('') + '</optgroup>'; }).join('');
+    const m = modal('<h2 id="mt" class="h3">Join your campus</h2>' +
+      '<p class="hint">Chalo is only for college students. Use your college email so we can check you belong here.</p>' +
+      '<form id="authForm" class="stack" novalidate>' +
+      '<div class="field"><label class="label" for="a-name">Your name</label><input class="input" id="a-name" autocomplete="name"></div>' +
+      '<div class="field"><label class="label" for="a-email">College email</label><input class="input" id="a-email" type="email" autocomplete="email" placeholder="you@msrit.edu"></div>' +
+      '<div class="row"><div class="field" style="flex:1 1 180px"><label class="label" for="a-dept">Department</label><select class="select" id="a-dept">' + dopts + '</select></div>' +
+      '<div class="field" style="flex:1 1 120px"><label class="label" for="a-year">Year</label><select class="select" id="a-year"><option>1st</option><option>2nd</option><option>3rd</option><option>4th</option><option>5th</option></select></div></div>' +
+      '<div class="field"><label class="label" for="a-gender">Gender</label><select class="select" id="a-gender"><option value="">Choose one</option><option value="woman">Woman</option><option value="man">Man</option><option value="other">Another gender or prefer not to say</option></select><span class="hint">Used only for women-only plans.</span></div>' +
+      '<label class="check"><input type="checkbox" id="a-ok"><span>I am 18 or older and I agree to the <a href="legal.html#guidelines" target="_blank" rel="noopener">community rules</a> and <a href="legal.html#privacy" target="_blank" rel="noopener">privacy notice</a>.</span></label>' +
+      '<p class="err" id="a-err" role="alert"></p>' +
+      '<button class="btn btn-primary" type="submit">Send my code</button></form>' +
+      '<p class="hint">Preview mode: verification is simulated.</p>');
+    m.querySelector('#authForm').addEventListener('submit', function (e) {
+      e.preventDefault();
+      const v = function (id) { return m.querySelector('#' + id).value.trim(); };
+      const err = m.querySelector('#a-err');
+      const name = v('a-name'), email = v('a-email');
+      if (name.length < 2) { err.textContent = 'Enter your name so others know who is coming.'; return; }
+      if (!EMAIL_RE.test(email)) { err.textContent = 'Enter your college email, like you@msrit.edu.'; return; }
+      if (!v('a-dept')) { err.textContent = 'Choose your department.'; return; }
+      if (!v('a-gender')) { err.textContent = 'Choose a gender option. It only affects women-only plans.'; return; }
+      if (!m.querySelector('#a-ok').checked) { err.textContent = 'Please confirm you are 18 or older and agree to the rules.'; return; }
+      const draft = { name: name, email: email, dept: v('a-dept'), year: v('a-year'), gender: v('a-gender') };
+      openCode(draft, done);
+    });
+  }
+  function openCode(draft, done) {
+    const m = modal('<h2 id="mt" class="h3">Check your email</h2>' +
+      '<p>We sent a 6-digit code to <strong>' + esc(draft.email) + '</strong>.</p>' +
+      '<p class="note">Preview mode: no email is sent. Type any 6 digits.</p>' +
+      '<form id="codeForm" class="stack" novalidate><div class="field"><label class="label" for="a-code">6-digit code</label><input class="input" id="a-code" inputmode="numeric" maxlength="6" autocomplete="one-time-code"></div>' +
+      '<p class="err" id="c-err" role="alert"></p><button class="btn btn-primary" type="submit">Verify and join</button></form>');
+    m.querySelector('#codeForm').addEventListener('submit', function (e) {
+      e.preventDefault();
+      if (!/^\d{6}$/.test(m.querySelector('#a-code').value.trim())) { m.querySelector('#c-err').textContent = 'Enter the 6 digits from your email.'; return; }
+      state.user = Object.assign({ phone: false, trusted: null, since: Date.now() }, draft);
+      save(); closeModal();
+      toast('Welcome, ' + draft.name.split(' ')[0] + '. You are verified.');
+      refresh();
+      if (done) done();
+    });
+  }
+  function openPhone(done) {
+    const m = modal('<h2 id="mt" class="h3">Verify your phone</h2>' +
+      '<p class="hint">Evening plans need a phone-verified host. We only use your number for safety checks.</p>' +
+      '<form id="phoneForm" class="stack" novalidate><div class="field"><label class="label" for="p-num">Mobile number</label><input class="input" id="p-num" inputmode="numeric" maxlength="10" placeholder="10-digit number" autocomplete="tel-national"></div>' +
+      '<div class="field"><label class="label" for="p-code">6-digit code</label><input class="input" id="p-code" inputmode="numeric" maxlength="6"></div>' +
+      '<p class="note">Preview mode: no text is sent. Type any 6 digits.</p><p class="err" id="p-err" role="alert"></p><button class="btn btn-primary" type="submit">Verify phone</button></form>');
+    m.querySelector('#phoneForm').addEventListener('submit', function (e) {
+      e.preventDefault();
+      const err = m.querySelector('#p-err');
+      if (!/^\d{10}$/.test(m.querySelector('#p-num').value.trim())) { err.textContent = 'Enter a 10-digit mobile number.'; return; }
+      if (!/^\d{6}$/.test(m.querySelector('#p-code').value.trim())) { err.textContent = 'Enter the 6-digit code.'; return; }
+      state.user.phone = true; save(); closeModal();
+      toast('Phone verified.'); refresh();
+      if (done) done();
+    });
+  }
+  function requireUser(fn) { if (state.user) fn(); else openAuth(fn); }
+
+  /* ---------- join / report / sos / copy ---------- */
+  function join(id) {
+    const p = get(id);
+    if (!p) return;
+    if (!state.user) { openAuth(function () { join(id); }); return; }
+    if (p.mine) { toast('This is your plan.'); return; }
+    if (p.women && state.user.gender !== 'woman') { toast('This plan is for women only.'); return; }
+    const j = state.joins[id];
+    if (j) {
+      delete state.joins[id]; delete state.paid[id]; save();
+      toast(j === 'req' ? 'Request cancelled.' : (p.cost > 0 ? 'You left the plan. Any payment is refunded.' : 'You left the plan.'));
+      refresh(); return;
+    }
+    if (view(p).full) { toast('This plan is full.'); return; }
+    if (p.approve) { state.joins[id] = 'req'; toast('Request sent to ' + p.host.n + '.'); }
+    else { state.joins[id] = 'in'; toast("You're in. The group chat is open."); }
+    save(); refresh();
+  }
+  function openReport(planId, who) {
+    const reasons = ['Fake profile or not a student', 'Harassment or unwanted behaviour', 'Unsafe or private location', 'Asking for money outside Chalo', 'Spam or something else'];
+    const m = modal('<h2 id="mt" class="h3">' + (who ? 'Report ' + esc(who) : 'Report this plan') + '</h2>' +
+      '<p class="hint">Tell us what happened. A person reads every report, and serious ones go first.</p>' +
+      '<form id="repForm" class="stack" novalidate><fieldset style="border:0;padding:0;margin:0" class="stack"><legend class="label" style="margin-bottom:8px">What is the problem?</legend>' +
+      reasons.map(function (r, i) { return '<label class="check"><input type="radio" name="reason" value="' + esc(r) + '"' + (i === 0 ? ' checked' : '') + '><span>' + esc(r) + '</span></label>'; }).join('') +
+      '</fieldset><div class="field"><label class="label" for="r-d">Details (optional)</label><textarea class="textarea" id="r-d" maxlength="500"></textarea></div>' +
+      '<button class="btn btn-dark" type="submit">Send report</button></form>' +
+      '<p class="hint">In an emergency, call 112.</p>');
+    m.querySelector('#repForm').addEventListener('submit', function (e) {
+      e.preventDefault();
+      saveReport({ planId: planId || '', who: who || '', reason: m.querySelector('input[name=reason]:checked').value, details: m.querySelector('#r-d').value.trim() });
+      closeModal(); toast('Report sent. A person will review it.');
+    });
+  }
+  function saveReport(r) {
+    r.ts = Date.now(); state.reports.push(r); save();
+  }
+  function copyText(text) {
+    const fallback = function () {
+      modal('<h2 id="mt" class="h3">Copy this text</h2><p class="hint">Your browser blocked automatic copying. Select the text below and copy it.</p><textarea class="textarea" id="copyBox" readonly rows="5">' + esc(text) + '</textarea>');
+      const b = document.getElementById('copyBox');
+      if (b) { b.focus(); b.select(); }
+    };
+    try {
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(text).then(function () { toast('Copied. Send it to someone you trust.'); }, fallback);
+        return;
+      }
+    } catch (e) { /* fall through */ }
+    fallback();
+  }
+  function openSOS() {
+    const t = state.user && state.user.trusted;
+    const m = modal('<h2 id="mt" class="h3">Need help right now?</h2>' +
+      '<p>If you are in danger, call <strong>112</strong> now. The women’s helpline is <strong>1091</strong>.</p>' +
+      (t ? '<p>We can message your trusted contact, <strong>' + esc(t.name) + '</strong>, with your plan details.</p><button class="btn btn-primary" id="sosSend" type="button">Alert ' + esc(t.name) + '</button>'
+         : '<p class="note">You have not added a trusted contact yet.</p><a class="btn btn-dark" href="me.html">Add a trusted contact</a>') +
+      '<p class="hint">Preview mode: this button does not send a message yet.</p>');
+    const b = m.querySelector('#sosSend');
+    if (b) b.addEventListener('click', function () { closeModal(); toast('Preview only. In the live app this alerts ' + t.name + '.'); });
+  }
+  function openCheckin() {
+    const m = modal('<h2 id="mt" class="h3">An hour in. Everything okay?</h2>' +
+      '<p class="hint">This is the check-in message you get during a plan.</p>' +
+      '<div class="stack"><button class="btn btn-primary" id="ci-ok" type="button">I’m okay</button><button class="btn btn-ghost" id="ci-help" type="button">I need help</button></div>');
+    m.querySelector('#ci-ok').addEventListener('click', function () { closeModal(); toast('Glad to hear it. Enjoy the rest of the plan.'); });
+    m.querySelector('#ci-help').addEventListener('click', openSOS);
+  }
+  function addWaitlist(kind, email, extra) {
+    state.waitlist.push({ kind: kind, email: email, extra: extra || '', ts: Date.now() });
+    save();
+  }
+
+  /* ---------- header + footer ---------- */
+  function renderChrome() {
+    const pg = (document.querySelector('[data-page]') || { dataset: {} }).dataset.page || '';
+    const links = [['plans.html', 'Plans', 'plans'], ['create.html', 'Host a plan', 'create'], ['safety.html', 'Safety', 'safety'], ['venues.html', 'For venues', 'venues']];
+    const u = state.user;
+    const nav = links.map(function (l) { return '<a href="' + l[0] + '"' + (pg === l[2] ? ' aria-current="page"' : '') + '>' + l[1] + '</a>'; }).join('');
+    const acct = u
+      ? '<a class="btn btn-soft btn-sm" href="me.html"' + (pg === 'me' ? ' aria-current="page"' : '') + '><span class="av" style="background:' + avColor(u.name) + ';width:26px;height:26px">' + esc(u.name.charAt(0).toUpperCase()) + '</span>' + esc(u.name.split(' ')[0]) + '</a>'
+      : '<button type="button" class="btn btn-dark btn-sm" data-act="auth">Join</button>';
+    const h = document.getElementById('site-header');
+    if (h) {
+      h.className = 'site-header';
+      h.innerHTML = '<div class="wrap"><a class="logo" href="index.html">' + ICON.logo + '</a>' +
+        '<nav class="nav" id="nav" aria-label="Main">' + nav + '</nav>' +
+        '<div class="head-actions">' + acct + '<button type="button" class="btn btn-soft btn-sm menu-btn" data-act="menu" aria-expanded="false" aria-controls="nav">Menu</button></div></div>';
+    }
+    const f = document.getElementById('site-footer');
+    if (f && !f.firstChild) {
+      f.className = 'site-footer';
+      f.innerHTML = '<div class="wrap"><div class="foot-grid">' +
+        '<div class="stack"><a class="logo" href="index.html">' + ICON.logo + 'chalo</a><p class="hint" style="max-width:36ch">Plans with people from your college. Chai, football, cafés, movies and walks.</p></div>' +
+        '<div><div class="eyebrow">Explore</div><ul><li><a href="plans.html">All plans</a></li><li><a href="create.html">Host a plan</a></li><li><a href="venues.html">For venues and hosts</a></li><li><a href="me.html">My Chalo</a></li></ul></div>' +
+        '<div><div class="eyebrow">Trust</div><ul><li><a href="safety.html">How safety works</a></li><li><a href="legal.html#guidelines">Community rules</a></li><li><a href="legal.html#privacy">Privacy</a></li><li><a href="legal.html#terms">Terms</a></li><li><a href="legal.html#grievance">Grievance officer</a></li></ul></div>' +
+        '</div><p class="foot-base">Chalo Campus is for college students aged 18 and over. This is a preview: the plans and people shown are made up, and what you do here is saved only on this device.</p></div>';
+    }
+  }
+  function refresh() {
+    renderChrome();
+    if (api.page) api.page();
+  }
+
+  /* ---------- global events ---------- */
+  document.addEventListener('click', function (e) {
+    const el = e.target.closest ? e.target.closest('[data-act]') : null;
+    if (!el) return;
+    const a = el.getAttribute('data-act');
+    if (a === 'auth') openAuth(refresh);
+    else if (a === 'join') join(el.getAttribute('data-id'));
+    else if (a === 'close') closeModal();
+    else if (a === 'menu') {
+      const n = document.getElementById('nav');
+      if (n) { const open = n.classList.toggle('open'); el.setAttribute('aria-expanded', open ? 'true' : 'false'); }
+    }
+  });
+
+  const api = {
+    state: state, save: save, resetAll: resetAll, esc: esc, rupee: rupee, fee: fee, avColor: avColor,
+    fmtWhen: fmtWhen, fmtDay: fmtDay, fmtTime: fmtTime, at: at, dayDiff: dayDiff, isLate: isLate,
+    CATS: CATS, DEPTS: DEPTS, VENUES: VENUES, CAMPUS: CAMPUS, FEE_RATE: FEE_RATE, ICON: ICON, EMAIL_RE: EMAIL_RE,
+    all: all, get: get, view: view, joinState: joinState, planCard: planCard, catOf: catOf,
+    toast: toast, modal: modal, closeModal: closeModal, openAuth: openAuth, openPhone: openPhone,
+    requireUser: requireUser, join: join, openReport: openReport, saveReport: saveReport, copyText: copyText,
+    openSOS: openSOS, openCheckin: openCheckin, addWaitlist: addWaitlist, refresh: refresh, renderChrome: renderChrome,
+    page: null
+  };
+  window.Chalo = api;
+  renderChrome();
+})();
+
+</script>
+<script>
+(function () {
+  var C = window.Chalo, esc = C.esc, state = C.state, root = document.getElementById('me');
+  var confirmClear = false;
+
+  function render() {
+    var u = state.user;
+    if (!u) {
+      root.innerHTML = '<div class="card card-lg stack tape" style="max-width:560px"><h2 class="h2">Join your campus</h2><p class="lead">Sign in with your college email to join plans, host your own and set up safety tools.</p><div><button type="button" class="btn btn-primary" data-act="auth">Join with college email</button></div></div>';
+      return;
+    }
+    var yearLabel = u.year ? u.year + ' year' : '';
+    var genderLabel = { woman: 'Woman', man: 'Man', other: 'Another gender or prefer not to say' }[u.gender] || '';
+    var mine = C.all().filter(function (p) { return p.mine; });
+    var joined = C.all().filter(function (p) { return state.joins[p.id]; });
+    var t = u.trusted;
+    root.innerHTML = '<div class="stack-lg">' +
+      '<div class="grid cols-2">' +
+      '<div class="card card-lg stack"><div class="row" style="flex-wrap:nowrap;gap:16px"><span class="av" style="width:64px;height:64px;font-size:26px;background:' + C.avColor(u.name) + '">' + esc(u.name.charAt(0).toUpperCase()) + '</span><div class="minw"><h2 class="h3">' + esc(u.name) + '</h2><p class="hint">' + esc(u.dept) + ' · ' + esc(yearLabel) + '</p></div></div>' +
+      '<ul class="ticks-list"><li>' + C.ICON.tick + '<span>College email verified: ' + esc(u.email) + '</span></li><li>' + (u.phone ? C.ICON.tick : '<svg width="16" height="16" viewBox="0 0 16 16" aria-hidden="true" style="flex:none;margin-top:3px"><circle cx="8" cy="8" r="7" fill="none" stroke="#CFCBC0" stroke-width="2"/></svg>') + '<span>' + (u.phone ? 'Phone verified' : 'Phone not verified. Needed to host evening plans.') + '</span></li></ul>' +
+      (u.phone ? '' : '<div><button type="button" class="btn btn-soft btn-sm" data-do="phone">Verify my phone</button></div>') +
+      '<p class="hint">Gender: ' + esc(genderLabel) + '. Used only for women-only plans.</p></div>' +
+      '<div class="card card-lg stack"><h2 class="h3">Trusted contact</h2><p class="hint">Someone who gets your plan details when you tap "I need help". Share your plan with them before you go.</p>' +
+      '<form id="trustForm" class="stack" novalidate><div class="field"><label class="label" for="t-name">Their name</label><input class="input" id="t-name" value="' + esc(t ? t.name : '') + '" autocomplete="off"></div>' +
+      '<div class="field"><label class="label" for="t-phone">Their mobile number</label><input class="input" id="t-phone" inputmode="numeric" maxlength="10" value="' + esc(t ? t.phone : '') + '" autocomplete="off"></div>' +
+      '<p class="err" id="t-err" role="alert"></p><div class="row"><button class="btn btn-dark btn-sm" type="submit">Save contact</button>' + (t ? '<button type="button" class="btn btn-soft btn-sm" data-do="trust-clear">Remove</button>' : '') + '</div></form></div>' +
+      '</div>' +
+      '<div class="card stack"><h2 class="h3">My interests</h2><p class="hint">Pick a few. They help us show you plans that fit.</p><div class="chips" id="interests">' +
+      C.CATS.map(function (c) { return '<button type="button" class="chip" data-do="interest" data-k="' + esc(c.k) + '" aria-pressed="' + (state.interests.indexOf(c.k) >= 0) + '">' + esc(c.k) + '</button>'; }).join('') + '</div></div>' +
+      '<div class="stack"><h2 class="h3">Plans I’m hosting</h2>' + (mine.length ? '<div class="grid cards">' + mine.map(function (p) { return C.planCard(p); }).join('') + '</div>' : '<div class="empty"><p class="hint">You haven’t hosted a plan yet.</p><a class="btn btn-primary btn-sm" href="create.html">Host a plan</a></div>') + '</div>' +
+      '<div class="stack"><h2 class="h3">Plans I’ve joined</h2>' + (joined.length ? '<div class="grid cards">' + joined.map(function (p) { return C.planCard(p); }).join('') + '</div>' : '<div class="empty"><p class="hint">You haven’t joined a plan yet.</p><a class="btn btn-primary btn-sm" href="plans.html">Find a plan</a></div>') + '</div>' +
+      '<div class="card stack"><h2 class="h3">People I’ve met</h2>' + (state.met.length ? '<ul class="people">' + state.met.map(function (m) { return '<li><span class="av" style="background:' + C.avColor(m.n) + '">' + esc(m.n.charAt(0)) + '</span><div class="who"><strong>' + esc(m.n) + '</strong><br><span class="hint">' + esc(m.d) + ' · met at “' + esc(m.plan) + '”</span></div></li>'; }).join('') + '</ul>' : '<p class="hint">After a plan, add the people you liked and they’ll show up here so you can invite them next time.</p>') + '</div>' +
+      '<div class="card stack"><h2 class="h3">Your data</h2><p class="hint">In this preview, everything is saved only in this browser. Nothing is sent to a server.</p>' +
+      (confirmClear ? '<div class="note">Delete your profile, plans and chats from this device?</div><div class="row"><button type="button" class="btn btn-primary btn-sm" data-do="clear-yes">Yes, delete everything</button><button type="button" class="btn btn-soft btn-sm" data-do="clear-no">Keep it</button></div>'
+        : '<div class="row"><button type="button" class="btn btn-soft btn-sm" data-do="signout">Sign out</button><button type="button" class="btn btn-soft btn-sm" data-do="clear">Delete my data</button></div>') + '</div>' +
+      '</div>';
+  }
+  C.page = render;
+
+  root.addEventListener('click', function (e) {
+    var b = e.target.closest('[data-do]'); if (!b) return;
+    var d = b.getAttribute('data-do');
+    if (d === 'phone') C.openPhone(render);
+    else if (d === 'interest') { var k = b.getAttribute('data-k'), i = state.interests.indexOf(k); if (i >= 0) state.interests.splice(i, 1); else state.interests.push(k); C.save(); render(); }
+    else if (d === 'trust-clear') { state.user.trusted = null; C.save(); C.toast('Trusted contact removed.'); render(); }
+    else if (d === 'signout') { state.user = null; C.save(); C.toast('Signed out.'); C.refresh(); }
+    else if (d === 'clear') { confirmClear = true; render(); }
+    else if (d === 'clear-no') { confirmClear = false; render(); }
+    else if (d === 'clear-yes') { confirmClear = false; C.resetAll(); C.toast('Your data was deleted from this device.'); C.refresh(); }
+  });
+  root.addEventListener('submit', function (e) {
+    if (e.target.id !== 'trustForm') return;
+    e.preventDefault();
+    var name = document.getElementById('t-name').value.trim(), phone = document.getElementById('t-phone').value.trim();
+    var err = document.getElementById('t-err');
+    if (name.length < 2) { err.textContent = 'Enter their name.'; return; }
+    if (!/^\d{10}$/.test(phone)) { err.textContent = 'Enter a 10-digit mobile number.'; return; }
+    state.user.trusted = { name: name, phone: phone }; C.save(); C.toast('Trusted contact saved.'); render();
+  });
+  render();
+})();
+</script>
+</body>
+</html>

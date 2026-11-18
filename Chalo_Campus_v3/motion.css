@@ -1,0 +1,64 @@
+/* Chalo Campus: shared motion. Loaded by every page so animation is uniform.
+   Uses the individual translate/scale properties so it never fights the tilted (rotate) cards. */
+@media (prefers-reduced-motion: no-preference){
+  /* page in / out */
+  html.mo body{animation:mo-page .5s ease}
+  @keyframes mo-page{from{opacity:0}to{opacity:1}}
+  html.mo-leave body{opacity:0;transition:opacity .18s ease}
+
+  /* scroll reveal (set by motion.js) */
+  html.mo [data-rv=""],html.mo [data-rv="in"]{transition:opacity .65s cubic-bezier(.2,.7,.2,1) var(--d,0s),translate .65s cubic-bezier(.2,.7,.2,1) var(--d,0s)}
+  html.mo [data-rv=""]{opacity:0;translate:0 28px}
+  .mo-pop{animation:mo-pop .28s cubic-bezier(.2,.7,.2,1)}
+  @keyframes mo-pop{from{opacity:0;translate:0 10px}to{opacity:1;translate:0 0}}
+
+  /* header */
+  .site-header{transition:box-shadow .25s ease,background-color .25s ease}
+  html.mo-scrolled .site-header{box-shadow:0 8px 24px rgba(29,34,48,.09)}
+
+  /* logo */
+  .logo svg{overflow:visible}
+  .logo .lg-a,.logo .lg-b,.logo .lg-l,.logo .lg-c{transform-box:fill-box;transform-origin:center;transition:transform .3s cubic-bezier(.3,1.5,.5,1)}
+  .logo:hover .lg-c{transform:translateX(4px)}
+  .logo:hover .lg-l{transform:scale(1.1)}
+  .logo:hover .lg-a{transform:translateX(-2px)}
+  .logo:hover .lg-b{transform:translateX(2px)}
+  html.mo-intro .site-header .logo .lg-a{animation:lg-a .7s cubic-bezier(.2,.8,.2,1) both}
+  html.mo-intro .site-header .logo .lg-b{animation:lg-b .7s cubic-bezier(.2,.8,.2,1) both}
+  html.mo-intro .site-header .logo .lg-l{animation:lg-l .55s .45s cubic-bezier(.3,1.6,.5,1) both}
+  html.mo-intro .site-header .logo .lg-c{animation:lg-c .5s .8s ease-out both}
+  @keyframes lg-a{from{transform:translateX(-18px);opacity:0}}
+  @keyframes lg-b{from{transform:translateX(18px);opacity:0}}
+  @keyframes lg-l{from{transform:scale(0)}}
+  @keyframes lg-c{from{transform:translateX(-10px);opacity:0}}
+
+  /* buttons, chips */
+  .btn{transition:translate .16s ease,scale .16s ease,box-shadow .2s ease,background-color .12s ease,transform .12s ease}
+  .btn:hover{translate:0 -2px;box-shadow:0 10px 20px rgba(29,34,48,.16)}
+  .btn:active{translate:0 0;scale:.97;box-shadow:none}
+  .chip{transition:scale .15s ease,background-color .15s ease,color .15s ease,border-color .15s ease}
+  .chip:hover{scale:1.04}
+  .chip:active{scale:.96}
+
+  /* cards, tickets, tiles lift on hover (not form cards) */
+  .ticket,.tile,.sticky,.grid>.card{transition:translate .24s cubic-bezier(.2,.7,.2,1),box-shadow .24s ease,transform .12s ease}
+  .ticket:hover,.tile:hover,.sticky:hover,.grid>.card:not(:has(input,select,textarea)):hover{translate:0 -5px;box-shadow:0 18px 36px rgba(29,34,48,.14)}
+
+  /* gentle float on the hero notes and tickets */
+  .postit{animation:mo-float 6s ease-in-out infinite}
+  #heroTickets .ticket:nth-child(1){animation:mo-float 7s ease-in-out -2s infinite}
+  #heroTickets .ticket:nth-child(2){animation:mo-float 8s ease-in-out -4s infinite}
+  #heroTickets .ticket:hover{animation-play-state:paused}
+  @keyframes mo-float{0%,100%{translate:0 0}50%{translate:0 -7px}}
+
+  /* highlighter swipe on .hl words */
+  html.mo .hl{background:linear-gradient(var(--butter),var(--butter)) no-repeat 0 0/0% 100%;animation:mo-mark .9s .55s cubic-bezier(.2,.7,.2,1) forwards}
+  @keyframes mo-mark{to{background-size:100% 100%}}
+
+  /* step numbers and ticks pop in with their card */
+  [data-rv="in"] .num{animation:mo-badge .5s .25s cubic-bezier(.3,1.6,.5,1) both}
+  @keyframes mo-badge{from{scale:0}to{scale:1}}
+}
+@media (prefers-reduced-motion: no-preference) and (hover:hover) and (pointer:fine){
+  html.mo body{background-position:0 calc(var(--sy,0px) * -.12)}
+}
